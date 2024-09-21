@@ -4,48 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calculator App</title>
+    <link rel="stylesheet" href="/style.css">
   </head>
   <body>
     <div id="app">
-      <div class="calculator">
-        <div class="screen">
-          <div id="display">0</div>
-        </div>
-        <div class="keypad">
-          <div class="row">
-            <button class="key special" id="hello">🌎 Hello</button>
-            <button class="key special" id="bye">👋 Bye</button>
+      <div class="outer-calculator">
+        <div class="inner-calculator">
+          <div class="header">
+            <span class="logo-text">
+              CONSTANT<br>
+              <span class="model">fx-9999ESX# PLUSPLUS</span>
+            </span>
+            <div class="solar-panel"></div>
           </div>
-          <div class="row">
-            <button class="key digit">7</button>
-            <button class="key digit">8</button>
-            <button class="key digit">9</button>
-            <button class="key special" id="backspace">⌫</button>
-            <button class="key special" id="clear">AC</button>
+          <div class="screen">
+            <div id="display">0</div>
           </div>
-          <div class="row">
-            <button class="key digit">4</button>
-            <button class="key digit">5</button>
-            <button class="key digit">6</button>
-            <button class="key operation">×</button>
-            <button class="key operation">÷</button>
-          </div>
-          <div class="row">
-            <button class="key digit">1</button>
-            <button class="key digit">2</button>
-            <button class="key digit">3</button>
-            <button class="key operation">+</button>
-            <button class="key operation">−</button>
-          </div>
-          <div class="row">
-            <button class="key digit">0</button>
-            <button class="key decimal">.</button>
-            <button class="key equals">=</button>
+          <div class="keypad">
+            <div class="row">
+              <button class="key special" id="hello">🌎 Hello</button>
+              <button class="key special" id="bye">👋 Bye</button>
+            </div>
+            <div class="row">
+              <button class="key digit">7</button>
+              <button class="key digit">8</button>
+              <button class="key digit">9</button>
+              <button class="key special" id="backspace">⌫</button>
+              <button class="key special" id="clear">AC</button>
+            </div>
+            <div class="row">
+              <button class="key digit">4</button>
+              <button class="key digit">5</button>
+              <button class="key digit">6</button>
+              <button class="key operation">×</button>
+              <button class="key operation">÷</button>
+            </div>
+            <div class="row">
+              <button class="key digit">1</button>
+              <button class="key digit">2</button>
+              <button class="key digit">3</button>
+              <button class="key operation">+</button>
+              <button class="key operation">−</button>
+            </div>
+            <div class="row">
+              <button class="key digit">0</button>
+              <button class="key decimal">.</button>
+              <button class="key equals">=</button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

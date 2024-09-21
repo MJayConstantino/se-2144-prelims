@@ -3,11 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -16,7 +11,7 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #242424;
+  background-color: #ffffff;
 }
 
 #app {
@@ -24,23 +19,58 @@ body {
   padding: 2rem;
 }
 
-.calculator {
-  background-color: #1a1a1a;
-  padding: 20px;
+.outer-calculator {
+  background-color: #454b7b;
+  padding: 10px;
+  border-radius: 20px;
+  position: relative;
+}
+
+.inner-calculator {
+  background-color: #e0e0e0;
   border-radius: 16px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-  width: 350px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.logo-text {
+  color: black;
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-left: 15px;
+  text-align: center;
+}
+
+.logo-text .model {
+  font-style: italic;
+  font-size: 0.6rem;
+  align-self: center;
+}
+
+.solar-panel {
+  background-color: #333;
+  height: 50px;
+  width: 180px;
+  border-radius: 4px;
+  margin-right: 15px;
 }
 
 .screen {
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #237d4a;
+  color: #d4f5d5;
   padding: 1.2rem;
   border-radius: 8px;
   font-size: 2.5rem;
   text-align: right;
   margin-bottom: 1rem;
-  height: 60px;
+  height: 100px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -60,7 +90,7 @@ body {
 button {
   font-size: 1.5rem;
   padding: 1rem;
-  border: none;
+  border: 2px solid #333;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color 0.25s;
@@ -73,30 +103,61 @@ button {
 }
 
 button.digit {
-  background-color: #333;
-  color: #fff;
+  background-color: white;
+  color: black;
 }
 
 button.operation {
-  background-color: #646cff;
-  color: white;
-}
-
-button.special {
-  background-color: #535bf2;
-  color: white;
+  background-color: lightgray;
+  color: black;
 }
 
 button.equals {
-  background-color: #ff6464;
-  color: white;
+  background-color: lightgray;
+  color: black;
   flex: 2;
+}
+
+button.special {
+  background-color: #454b7b;
+  color: white;
+}
+
+#backspace, #clear {
+  background-color: orange;
+  color: black;
+  font-weight: bold;
 }
 
 button.decimal {
+  background-color: white;
+  color: black;
   flex: 2;
 }
 
-button:hover {
+button.digit:hover, button.decimal:hover {
+  background-color: #e0e0e0;
+}
+
+button.operation:hover, button.equals:hover {
   filter: brightness(1.2);
+}
+
+button.special:hover {
+  filter: brightness(1.2);
+}
+
+#backspace:hover, #clear:hover {
+  filter: brightness(1.2);
+}
+
+.keypad {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
 }
