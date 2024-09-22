@@ -1,5 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap');
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Pixelfy Sans, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
@@ -23,7 +25,6 @@ body {
   background-color: #454b7b;
   padding: 10px;
   border-radius: 20px;
-  position: relative;
 }
 
 .inner-calculator {
@@ -64,16 +65,30 @@ body {
 
 .screen {
   background-color: #237d4a;
-  color: #d4f5d5;
   padding: 1.2rem;
   border-radius: 8px;
-  font-size: 2.5rem;
-  text-align: right;
   margin-bottom: 1rem;
   height: 100px;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+#operation-display, #result-display {
+  font-family: "Pixelify Sans", serif;
+  color: #d4f5d5;
+  min-height: 1.5em;
+}
+
+#operation-display {
+  font-size: 1.5rem;
+  text-align: left;
+  color: #a0d8b3;
+}
+
+#result-display {
+  font-size: 2.5rem;
+  text-align: right;
 }
 
 .keypad {
@@ -151,13 +166,13 @@ button.special:hover {
   filter: brightness(1.2);
 }
 
-.keypad {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
-.row {
-  display: flex;
-  gap: 10px;
+#operation-display.cursor::after {
+  content: '|';
+  animation: blink 1s infinite;
 }
