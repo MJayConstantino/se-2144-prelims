@@ -80,14 +80,15 @@ class Calculator {
         this.helloIsActive = true;
         const greetings = ['Hello', 'Hola', 'Bonjour', 'Ciao', 'Konnichiwa', 'Namaste', 'Merhaba', 'Kamusta'];
         const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-        this.currentOperation = randomGreeting;
+        this.currentOperation = '';
+        this.result = randomGreeting;
         this.updateDisplay();
     }
 
     handleBye() {
         this.isOn = false;
-        this.currentOperation = 'Goodbye';
-        this.result = '';
+        this.currentOperation = '';
+        this.result = 'Goodbye';
         this.updateDisplay();
         window.setTimeout(() => {
             this.currentOperation = '';
@@ -97,7 +98,11 @@ class Calculator {
     }
 
     updateDisplay() {
-        this.operationDisplay.textContent = this.currentOperation;
+        if (this.currentOperation.length > 15) {
+            this.operationDisplay.textContent = this.currentOperation.slice(0, 12) + '...';
+        } else {
+            this.operationDisplay.textContent = this.currentOperation;
+        }
         this.resultDisplay.textContent = this.result;
     }
 }
