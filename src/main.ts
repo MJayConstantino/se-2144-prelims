@@ -44,13 +44,19 @@ class Calculator {
     handleInput(value: string) {
         if (!this.isOn) return;
 
-        if ('0123456789'.includes(value) && !this.helloIsActive) {
+        if (this.helloIsActive) {
+            this.currentOperation = '';
+            this.result = '';
+            this.helloIsActive = false;
+        }
+
+        if ('0123456789'.includes(value)) {
             this.appendToOperation(value);
-        } else if (value === '.' && !this.helloIsActive) {
+        } else if (value === '.') {
             this.appendDecimal();
-        } else if ('+−×÷'.includes(value) && !this.helloIsActive) {
+        } else if ('+−×÷'.includes(value)) {
             this.setOperation(value);
-        } else if (value === '=' && !this.helloIsActive) {
+        } else if (value === '=') {
             this.calculate();
         }
 
@@ -132,6 +138,7 @@ class Calculator {
         const greetings = ['Hello', 'Hola', 'Bonjour', 'Ciao', 'Konnichiwa', 'Namaste', 'Merhaba', 'Kamusta'];
         const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
         this.currentOperation = '';
+        this.previousResult = '';
         this.result = randomGreeting;
         this.updateDisplay();
     }
@@ -154,7 +161,7 @@ class Calculator {
         } else {
             this.operationDisplay.textContent = this.currentOperation;
         }
-        this.resultDisplay.textContent = this.result.slice(0, 14);
+        this.resultDisplay.textContent = this.result.slice(0, 12);
     }
 }
 
