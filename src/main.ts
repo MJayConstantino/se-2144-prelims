@@ -1,4 +1,4 @@
-import './style.css'
+import './style.css';
 
 class Calculator {
     operationDisplay: HTMLDivElement;
@@ -44,11 +44,13 @@ class Calculator {
     handleInput(value: string) {
         if (!this.isOn) return;
 
-        if ('0123456789.'.includes(value) && !this.helloIsActive) {
+        if ('0123456789'.includes(value) && !this.helloIsActive) {
             this.appendToOperation(value);
+        } else if (value === '.' && !this.helloIsActive) {
+            this.appendDecimal();
         } else if ('+−×÷'.includes(value) && !this.helloIsActive) {
             this.setOperation(value);
-        } else if (value === '=') {
+        } else if (value === '=' && !this.helloIsActive) {
             this.calculate();
         }
 
@@ -56,29 +58,56 @@ class Calculator {
     }
 
     appendToOperation(value: string) {
-        if (this.currentOperation.length < 15) {
-            this.currentOperation += value;
+        this.currentOperation += value;
+    }
+
+    appendDecimal() {
+        const lastOperand = this.getLastOperand();
+        if (!lastOperand.includes('.')) {
+            this.currentOperation += '.';
         }
     }
 
     setOperation(selectedOperation: string) {
         if (this.previousResult !== '') {
             this.currentOperation = this.previousResult + selectedOperation;
-            console.log(this.currentOperation)
-        } else if (this.currentOperation.length > 0 && !'+−×÷'.includes(this.currentOperation[this.currentOperation.length - 1])) {
-            if (this.currentOperation.length < 15) {
+            this.previousResult = '';
+        } else if (this.currentOperation.length > 0) {
+            const lastChar = this.currentOperation[this.currentOperation.length - 1];
+            if ('+−×÷'.includes(lastChar)) {
+                this.currentOperation = this.currentOperation.slice(0, -1) + selectedOperation;
+            } else {
                 this.currentOperation += selectedOperation;
             }
         }
     }
 
+    getLastOperand(): string {
+        const operators = ['+', '−', '×', '÷'];
+        let lastOperatorIndex = -1;
+
+        operators.forEach((op) => {
+            const index = this.currentOperation.lastIndexOf(op);
+            if (index > lastOperatorIndex) {
+                lastOperatorIndex = index;
+            }
+        });
+
+        return lastOperatorIndex === -1
+            ? this.currentOperation
+            : this.currentOperation.slice(lastOperatorIndex + 1);
+    }
+
     calculate() {
         try {
-            const formattedOperation = this.currentOperation.replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-');
+            const formattedOperation = this.currentOperation
+                .replace(/×/g, '*')
+                .replace(/÷/g, '/')
+                .replace(/−/g, '-');
             this.result = eval(formattedOperation).toString();
             this.previousResult = this.result;
         } catch (error) {
-            this.result = `${error}`;
+            this.result = 'Error';
         }
     }
 
@@ -120,12 +149,12 @@ class Calculator {
     }
 
     updateDisplay() {
-        if (this.currentOperation.length > 15) {
-            this.operationDisplay.textContent = this.currentOperation.slice(0, 12) + '...';
+        if (this.currentOperation.length > 20) {
+            this.operationDisplay.textContent = this.currentOperation.slice(0, 17) + '...';
         } else {
             this.operationDisplay.textContent = this.currentOperation;
         }
-        this.resultDisplay.textContent = this.result.slice(0, 15);
+        this.resultDisplay.textContent = this.result.slice(0, 14);
     }
 }
 

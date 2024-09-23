@@ -147,7 +147,7 @@ button.special {
 button.decimal {
   background-color: white;
   color: black;
-  flex: 2;
+  flex: 1.5;
 }
 
 button.digit:hover, button.decimal:hover {
