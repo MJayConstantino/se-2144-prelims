@@ -17,7 +17,7 @@ class Calculator {
         this.specialDisplay = document.getElementById('special-display') as HTMLDivElement;
         this.resultDisplay = document.getElementById('result-display') as HTMLDivElement;
         this.setupEventListeners();
-        // this.startBlinkingCursor();
+        this.startBlinkingCursor();
     }
 
     setupEventListeners() {
@@ -31,18 +31,26 @@ class Calculator {
         document.getElementById('bye')?.addEventListener('click', () => this.handleBye());
     }
 
-    // startBlinkingCursor() {
-    //     if (this.cursorInterval) {
-    //         clearInterval(this.cursorInterval);
-    //     }
-    //     this.cursorInterval = window.setInterval(() => {
-    //         if (this.isOn) {
-    //             this.operationDisplay.classList.toggle('cursor');
-    //         } else {
-    //             this.operationDisplay.classList.remove('cursor');
-    //         }
-    //     }, 500);
-    // }
+    startBlinkingCursor() {
+        if (this.cursorInterval) {
+            clearInterval(this.cursorInterval);
+        }
+        this.cursorInterval = window.setInterval(() => {
+            if (this.isOn) {
+                this.operationDisplay.classList.toggle('cursor');
+            } else {
+                this.operationDisplay.classList.remove('cursor');
+            }
+        }, 500);
+    }
+
+    stopBlinkingCursor() {
+        if (this.cursorInterval) {
+            clearInterval(this.cursorInterval);
+            this.cursorInterval = null;
+        }
+        this.operationDisplay.classList.remove('cursor');
+    }
 
     handleInput(value: string) {
         if (!this.isOn) return;
@@ -51,6 +59,7 @@ class Calculator {
             this.currentOperation = '';
             this.result = '';
             this.specialText = '';
+            this.startBlinkingCursor()
             this.helloIsActive = false;
         }
 
@@ -96,8 +105,8 @@ class Calculator {
         const operators = ['+', '−', '×', '÷'];
         let lastOperatorIndex = -1;
 
-        operators.forEach((op) => {
-            const index = this.currentOperation.lastIndexOf(op);
+        operators.forEach((operator) => {
+            const index = this.currentOperation.lastIndexOf(operator);
             if (index > lastOperatorIndex) {
                 lastOperatorIndex = index;
             }
@@ -133,6 +142,7 @@ class Calculator {
         this.previousResult = '';
         this.specialText = '';
         this.isOn = true;
+        this.startBlinkingCursor()
         this.helloIsActive = false;
         this.updateDisplay();
     }
@@ -146,6 +156,7 @@ class Calculator {
         this.previousResult = '';
         this.result = '';
         this.specialText = randomGreeting;
+        this.stopBlinkingCursor()
         this.updateDisplay();
     }
 
