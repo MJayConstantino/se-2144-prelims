@@ -3,7 +3,9 @@ import './style.css';
 class Calculator {
     operationDisplay: HTMLDivElement;
     resultDisplay: HTMLDivElement;
+    specialDisplay: HTMLDivElement;
     currentOperation: string = '';
+    specialText: string = '';
     result: string = '';
     previousResult: string = '';
     isOn: boolean = true;
@@ -12,9 +14,10 @@ class Calculator {
 
     constructor() {
         this.operationDisplay = document.getElementById('operation-display') as HTMLDivElement;
+        this.specialDisplay = document.getElementById('special-display') as HTMLDivElement;
         this.resultDisplay = document.getElementById('result-display') as HTMLDivElement;
         this.setupEventListeners();
-        this.startBlinkingCursor();
+        // this.startBlinkingCursor();
     }
 
     setupEventListeners() {
@@ -28,18 +31,18 @@ class Calculator {
         document.getElementById('bye')?.addEventListener('click', () => this.handleBye());
     }
 
-    startBlinkingCursor() {
-        if (this.cursorInterval) {
-            clearInterval(this.cursorInterval);
-        }
-        this.cursorInterval = window.setInterval(() => {
-            if (this.isOn) {
-                this.operationDisplay.classList.toggle('cursor');
-            } else {
-                this.operationDisplay.classList.remove('cursor');
-            }
-        }, 500);
-    }
+    // startBlinkingCursor() {
+    //     if (this.cursorInterval) {
+    //         clearInterval(this.cursorInterval);
+    //     }
+    //     this.cursorInterval = window.setInterval(() => {
+    //         if (this.isOn) {
+    //             this.operationDisplay.classList.toggle('cursor');
+    //         } else {
+    //             this.operationDisplay.classList.remove('cursor');
+    //         }
+    //     }, 500);
+    // }
 
     handleInput(value: string) {
         if (!this.isOn) return;
@@ -47,6 +50,7 @@ class Calculator {
         if (this.helloIsActive) {
             this.currentOperation = '';
             this.result = '';
+            this.specialText = '';
             this.helloIsActive = false;
         }
 
@@ -127,6 +131,7 @@ class Calculator {
         this.currentOperation = '';
         this.result = '';
         this.previousResult = '';
+        this.specialText = '';
         this.isOn = true;
         this.helloIsActive = false;
         this.updateDisplay();
@@ -139,18 +144,23 @@ class Calculator {
         const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
         this.currentOperation = '';
         this.previousResult = '';
-        this.result = randomGreeting;
+        this.result = '';
+        this.specialText = randomGreeting;
         this.updateDisplay();
     }
 
     handleBye() {
         this.isOn = false;
         this.currentOperation = '';
-        this.result = 'Goodbye!';
+        this.previousResult = '';
+        this.result = '';
+        this.specialText = 'Goodbye!';
         this.updateDisplay();
         setTimeout(() => {
             this.currentOperation = '';
+            this.previousResult = '';
             this.result = '';
+            this.specialText = '';
             this.updateDisplay();
         }, 2000);
     }
@@ -161,7 +171,8 @@ class Calculator {
         } else {
             this.operationDisplay.textContent = this.currentOperation;
         }
-        this.resultDisplay.textContent = this.result.slice(0, 12);
+        this.specialDisplay.textContent = this.specialText;
+        this.resultDisplay.textContent = this.result.slice(0, 14);
     }
 }
 
