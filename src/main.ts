@@ -11,6 +11,7 @@ class Calculator {
     isOn: boolean = true;
     cursorInterval: number | null = null;
     helloIsActive: boolean = false;
+    byeIsActive: boolean = false;
 
     constructor() {
         this.operationDisplay = document.getElementById('operation-display') as HTMLDivElement;
@@ -144,6 +145,7 @@ class Calculator {
         this.isOn = true;
         this.startBlinkingCursor()
         this.helloIsActive = false;
+        this.byeIsActive = false;
         this.updateDisplay();
     }
 
@@ -161,6 +163,7 @@ class Calculator {
     }
 
     handleBye() {
+        if (this.byeIsActive) return;
         this.isOn = false;
         this.currentOperation = '';
         this.previousResult = '';
@@ -172,6 +175,7 @@ class Calculator {
             this.previousResult = '';
             this.result = '';
             this.specialText = '';
+            this.byeIsActive = true
             this.updateDisplay();
         }, 2000);
     }
