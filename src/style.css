@@ -188,23 +188,11 @@ button.special {
 button.decimal {
   background-color: white;
   color: black;
-  grid-column: span 2;
+  grid-column: span 2
 }
 
-button.digit:hover, button.decimal:hover {
-  background-color: lightgrey;
-}
-
-button.operation:hover, button.equals:hover {
-  filter: brightness(1.2);
-}
-
-button.special:hover {
-  filter: brightness(1.2);
-}
-
-#backspace:hover, #clear:hover {
-  filter: brightness(1.2);
+button:hover {
+  filter: brightness(1.1);
 }
 
 @keyframes blink {
@@ -216,4 +204,27 @@ button.special:hover {
 #operation-display.cursor::after {
   content: '|';
   animation: blink 1s infinite;
+}
+
+@media (max-height: 600px) {
+  .outer-calculator {
+    height: 95vh;
+  }
+  
+  button {
+    font-size: 1.2rem;
+    padding: 5px;
+  }
+  
+  .screen {
+    padding: 10px;
+  }
+  
+  #operation-display {
+    font-size: 1rem;
+  }
+  
+  #result-display {
+    font-size: 1.5rem;
+  }
 }
