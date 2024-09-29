@@ -212,7 +212,7 @@ button:hover {
   }
   
   button {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     padding: 5px;
   }
   
@@ -221,16 +221,16 @@ button:hover {
   }
   
   #operation-display {
-    font-size: 0.5rem;
+    font-size: 0.3rem;
   }
   
   #result-display {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
   }
 
   .logo-text .model {
     font-style: italic;
-    font-size: 0.4rem;
+    font-size: 0.2rem;
   }
 
   #special-display {
