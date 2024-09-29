@@ -221,10 +221,23 @@ button:hover {
   }
   
   #operation-display {
-    font-size: 1rem;
+    font-size: 0.5rem;
   }
   
   #result-display {
-    font-size: 1.5rem;
+    font-size: 0.8rem;
+  }
+
+  .logo-text .model {
+    font-style: italic;
+    font-size: 0.4rem;
+  }
+
+  #special-display {
+    font-family: "Raleway Dots", sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+    color: #3c00ac;
   }
 }
