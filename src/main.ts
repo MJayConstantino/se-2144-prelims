@@ -152,7 +152,7 @@ class Calculator {
     handleHello() {
         if (!this.isOn) return;
         this.helloIsActive = true;
-        const greetings = ['Hello', 'Hola', 'Bonjour', 'Ciao', 'Konnichiwa', 'Namaste', 'Merhaba', 'Kamusta'];
+        const greetings = ['Hello', 'Hola', 'Bonjour', 'Ciao', 'Namaste', 'Merhaba', 'Kamusta'];
         const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
         this.currentOperation = '';
         this.previousResult = '';
@@ -168,7 +168,7 @@ class Calculator {
         this.currentOperation = '';
         this.previousResult = '';
         this.result = '';
-        this.specialText = 'Goodbye!';
+        this.specialText = 'Goodbye';
         this.updateDisplay();
         setTimeout(() => {
             this.currentOperation = '';
@@ -181,13 +181,13 @@ class Calculator {
     }
 
     updateDisplay() {
-        if (this.currentOperation.length > 20) {
-            this.operationDisplay.textContent = this.currentOperation.slice(0, 17) + '...';
+        if (this.currentOperation.length > 15) {
+            this.operationDisplay.textContent = this.currentOperation.slice(0, 12) + '...';
         } else {
             this.operationDisplay.textContent = this.currentOperation;
         }
         this.specialDisplay.textContent = this.specialText;
-        this.resultDisplay.textContent = this.result.slice(0, 14);
+        this.resultDisplay.textContent = this.result.slice(0, 12);
     }
 }
 
