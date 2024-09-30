@@ -168,7 +168,7 @@ class Calculator {
         this.currentOperation = '';
         this.previousResult = '';
         this.result = '';
-        this.specialText = 'Goodbye';
+        this.specialText = 'Goodbye!';
         this.updateDisplay();
         setTimeout(() => {
             this.currentOperation = '';
