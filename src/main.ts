@@ -152,7 +152,7 @@ class Calculator {
     handleHello() {
         if (!this.isOn) return;
         this.helloIsActive = true;
-        const greetings = ['Hello', 'Hola', 'Bonjour', 'Ciao', 'Namaste', 'Merhaba', 'Kamusta'];
+        const greetings = ['Hello', 'Hola', 'Bonjour', 'Ciao', 'Namaste', 'Merhaba', 'Kamusta', 'Konnichiwa'];
         const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
         this.currentOperation = '';
         this.previousResult = '';
@@ -181,13 +181,18 @@ class Calculator {
     }
 
     updateDisplay() {
-        if (this.currentOperation.length > 15) {
-            this.operationDisplay.textContent = this.currentOperation.slice(0, 12) + '...';
+        if (this.currentOperation.length > 20) {
+            this.operationDisplay.textContent = this.currentOperation.slice(0, 17) + '...';
         } else {
             this.operationDisplay.textContent = this.currentOperation;
         }
         this.specialDisplay.textContent = this.specialText;
-        this.resultDisplay.textContent = this.result.slice(0, 12);
+        if (this.result.length > 14) {
+            this.resultDisplay.textContent = this.result.slice(0, 12) + '..';
+        } else {
+            this.resultDisplay.textContent = this.result;
+        }
+        
     }
 }
 
