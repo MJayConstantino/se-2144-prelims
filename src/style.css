@@ -1,13 +1,16 @@
+/* Import custom fonts for retro calculator look */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Raleway+Dots&display=swap');
 
+/* Global styles */
 :root {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Orbitron', sans-serif; /* Retro digital display font */
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
 }
 
+/* Center calculator on page with gradient background */
 body {
   display: flex;
   align-items: center;
@@ -15,6 +18,7 @@ body {
   min-height: 100vh;
   background: linear-gradient(135deg, white 0%, #C4A484 100%);
 }
+
 
 #app {
   width: 100%;
@@ -24,6 +28,7 @@ body {
   align-items: center;
 }
 
+/* Calculator container styles */
 .outer-calculator {
   background-color: #454b7b;
   padding: 15px;
@@ -34,11 +39,15 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
+
+  /* Complex shadow for depth and realism */
   box-shadow: 
     12px 12px 24px rgba(0, 0, 0, 0.4),
     -6px -6px 12px rgba(255, 255, 255, 0.1),
     inset 1px 1px 2px rgba(255, 255, 255, 0.3),
     inset -1px -1px 2px rgba(0, 0, 0, 0.4);
+  
+  /* Gradient background for metallic look */
   background: linear-gradient(145deg, #4a5084, #404672);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
@@ -89,24 +98,25 @@ body {
   background-color: #555;
 }
 
+/* Calculator screen styles */
 .screen {
   background-color: #1a5d36;
   padding: 15px;
   border-radius: 12px;
   margin-bottom: 15px;
-  flex-grow: 0;
-  flex-shrink: 0;
   height: 20%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   
+  /* Inset shadow for screen depth */
   box-shadow: 
     inset 0 2px 8px rgba(0, 0, 0, 0.5),
     inset 0 -1px 4px rgba(255, 255, 255, 0.2);
   
   border: 1px solid rgba(0, 0, 0, 0.3);
   
+  /* Create LCD screen texture with diagonal lines */
   background-image: 
     linear-gradient(
       45deg,
@@ -217,6 +227,7 @@ body {
   flex-grow: 1;
 }
 
+/* Button styles */
 button {
   font-size: 1.5rem;
   padding: 10px;
@@ -231,6 +242,7 @@ button {
   overflow: hidden;
 }
 
+/* Different button types with unique styling */
 button.digit {
   background-color: #ffffff;
   color: black;
@@ -319,6 +331,7 @@ button.special:active {
     0 3px 3px rgba(0, 0, 0, 0.2);
 }
 
+/* Blinking cursor animation */
 @keyframes blink {
   0% { opacity: 1; }
   50% { opacity: 0; }
