@@ -3,7 +3,7 @@ import './style.css';
 
 /**
  * Calculator Class
- * Implements a retro-style calculator with basic arithmetic operations
+ * Implements a calculator with basic arithmetic operations
  * and special greeting functionalities
  */
 class Calculator {
@@ -78,38 +78,79 @@ class Calculator {
     /**
      * Handles all button inputs (numbers, operations, decimal)
      */
-    handleInput(value: string) {
+    handleInput(value: string): void {
         if (!this.isOn) return;
 
-        // Reset if coming from a greeting
         if (this.helloIsActive) {
-            this.currentOperation = '';
-            this.result = '';
-            this.specialText = '';
-            this.startBlinkingCursor()
-            this.helloIsActive = false;
+            this.clearDisplay();
         }
 
-        // Route input to appropriate handler
-        if ('0123456789'.includes(value)) {
-            this.appendToOperation(value);
-        } else if (value === '.') {
-            this.appendDecimal();
-        } else if ('+−×÷'.includes(value)) {
-            this.setOperation(value);
-        } else if (value === '=') {
-            this.calculate();
+        switch (true) {
+            case /[0-9]/.test(value):
+                this.appendNumber(value);
+                break;
+            case value === '.':
+                this.appendDecimal();
+                break;
+            case /[+−×÷]/.test(value):
+                this.setOperation(value);
+                break;
+            case value === '=':
+                this.calculate();
+                break;
         }
 
         this.updateDisplay();
     }
 
+
+    /**
+     * cleasrs the display
+     */
+    clearDisplay() {
+        this.currentOperation = '';  // Reset currentOperation
+        this.result = '';            // Reset result
+        this.specialText = '';       // Reset specialText
+        this.previousResult = '';    // Reset previousResult
+        this.helloIsActive = false;  // Reset hello flag
+        this.byeIsActive = false;    // Reset bye flag 
+        this.startBlinkingCursor();  // Restart cursor
+        this.updateDisplay();        // Immediately update display
+    }
+
     /**
      * Appends a number to the current operation
+     * Prevents invalid number formats such as leading zeros
      * @param value - The digit to append
      */
-    appendToOperation(value: string) {
+    appendNumber(value: string): void {
+        const currentNumber = this.getCurrentNumber();
+        
+        // Prevent leading zeros
+        if (value === '0' && currentNumber === '0') return;
+        if (currentNumber === '0' && value !== '.') {
+            this.currentOperation = this.currentOperation.slice(0, -1);
+        }
+        
         this.currentOperation += value;
+    }
+
+    /**
+     * Gets the current number being entered
+     * @returns The current number as a string
+     */
+    getCurrentNumber(): string {
+        const operators = ['+', '−', '×', '÷'];
+        let lastIndex = -1;
+        
+        for (let i = this.currentOperation.length - 1; i >= 0; i--) {
+            if (operators.includes(this.currentOperation[i])) {
+                lastIndex = i;
+                break;
+            }
+        }
+        
+        return this.currentOperation.slice(lastIndex + 1);
     }
 
     /**
@@ -133,16 +174,26 @@ class Calculator {
     setOperation(selectedOperation: string) {
         if (this.previousResult !== '') {
             // Start new operation with previous result
-            this.currentOperation = this.previousResult + selectedOperation;
-            this.previousResult = '';
-        } else if (this.currentOperation.length > 0) {
-            const lastChar = this.currentOperation[this.currentOperation.length - 1];
-            if ('+−×÷'.includes(lastChar)) {
-                // Replace existing operation
-                this.currentOperation = this.currentOperation.slice(0, -1) + selectedOperation;
+            if (selectedOperation === '−' && !this.previousResult.startsWith('-')) {
+                this.currentOperation = '-' + this.previousResult; // Apply negative to previous result
             } else {
-                // Add operation to end of number
-                this.currentOperation += selectedOperation;
+               this.currentOperation = this.previousResult + selectedOperation; 
+            }
+            this.previousResult = '';
+        } else {
+            if (this.currentOperation === '' && selectedOperation === '−') {
+                // Allow initial negative sign
+                this.currentOperation = '−';
+            } else if (this.currentOperation === '−' && selectedOperation === '−') {
+                // Prevent more than one initial negative sign
+                return; // Or you could display an error message
+            } else {
+                const lastChar = this.currentOperation[this.currentOperation.length - 1];
+                if ('+×÷'.includes(lastChar) && selectedOperation === '−') {
+                    this.currentOperation += selectedOperation;
+                } else if (!'+×÷−'.includes(lastChar)) { // Allow operator after number, but not after another operator (except initial -)
+                    this.currentOperation += selectedOperation;
+                }
             }
         }
     }
@@ -206,15 +257,8 @@ class Calculator {
      * Resets all calculator states to their initial values
      */
     handleClear() {
-        this.currentOperation = '';
-        this.result = '';
-        this.previousResult = '';
-        this.specialText = '';
+        this.clearDisplay()
         this.isOn = true;
-        this.startBlinkingCursor();
-        this.helloIsActive = false;
-        this.byeIsActive = false;
-        this.updateDisplay();
     }
 
     /**
@@ -222,17 +266,29 @@ class Calculator {
      * Displays a random greeting in different languages
      */
     handleHello() {
-        if (!this.isOn) return;
-        this.helloIsActive = true;
-        
-        // Array of greetings in different languages
-        const greetings = ['Hello', 'Hola', 'Bonjour', 'Ciao', 'Namaste', 'Merhaba', 'Kamusta', 'Konnichiwa'];
+        // List  of greetings in different languages
+        const greetings = [
+            "Hello",     // English
+            "Hola",      // Spanish
+            "Bonjour",   // French
+            "Hallo",     // German
+            "Ciao",      // Italian
+            "Olá",       // Portuguese
+            "Привет",    // Russian
+            "こんにちは",  // Japanese (Konnichiwa)
+            "안녕하세요",  // Korean (Annyeonghaseyo)
+            "你好",       // Chinese (Nǐ hǎo)
+            "Γειά σου",  // Greek (Yia sou)
+            "Merhaba",   // Turkish
+            "Namaste",   // Hindi
+            "Salam",     // Arabic
+            "Shalom"     // Hebrew
+          ];
         const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
-        
-        // Clear current operation and display greeting
-        this.currentOperation = '';
-        this.previousResult = '';
-        this.result = '';
+
+        this.clearDisplay()
+        this.helloIsActive = true;
+        this.isOn = true;
         this.specialText = randomGreeting;
         this.stopBlinkingCursor();
         this.updateDisplay();
@@ -240,30 +296,35 @@ class Calculator {
 
     /**
      * Handles the power off functionality
-     * Displays a goodbye message and then clears the calculator
+     * Displays a goodbye message with an animation and then clears the calculator
      */
     handleBye() {
         if (this.byeIsActive) return;
         
-        // Turn off calculator and show goodbye message
-        this.isOn = false;
-        this.currentOperation = '';
-        this.previousResult = '';
-        this.result = '';
-        this.specialText = 'Goodbye!';
-        this.updateDisplay();
+        this.clearDisplay();   // Clear the display initially
+        this.isOn = false;     // Turn off the calculator
+        this.byeIsActive = true; // Prevents re-triggering
         
-        // Clear everything after 2 seconds
-        setTimeout(() => {
-            this.currentOperation = '';
-            this.previousResult = '';
-            this.result = '';
-            this.specialText = '';
-            this.byeIsActive = true;
-            this.updateDisplay();
-        }, 2000);
+        const goodbyeText = 'Goodbye!';
+        this.specialText = ''; // Start with an empty string
+
+        let index = 0;
+        
+        // Reveal each letter one by one every 250ms over 2 seconds
+        const interval = setInterval(() => {
+            if (index < goodbyeText.length) {
+                this.specialText += goodbyeText[index];
+                this.updateDisplay(); // Update the display after adding each letter
+                index++;
+            } else {
+                clearInterval(interval); // Stop the interval when all letters are displayed
+                setTimeout(() => {
+                    this.clearDisplay(); // Clear the display after 2 seconds
+                }, 2000);
+            }
+        }, 250); // 250ms * 8 letters = 2 seconds total
     }
-    
+        
     /**
      * Updates all display elements with current state
      * Handles truncation for long expressions/results
