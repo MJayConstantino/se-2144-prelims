@@ -1,7 +1,7 @@
 // Import styles from external CSS file
 import './style.css';
 import { Calculator } from './components/calculator';
-import { setupEventListeners } from './components/eventListener';
+import { setupEventListeners } from './components/eventListeners';
 
 /**
  * Initialize the calculator when the DOM is fully loaded

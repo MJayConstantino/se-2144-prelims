@@ -185,7 +185,9 @@ export class Calculator {
             this.previousResult = '';
         } else {
             const lastChar = this.currentOperation[this.currentOperation.length - 1];
-            if (!'+×÷−'.includes(lastChar)) {
+            if ('+×÷'.includes(lastChar) && selectedOperation == '−') {
+                this.currentOperation += selectedOperation; // Add negative operator if after an operator
+            } else if (!'+×÷−'.includes(lastChar)) {
                 this.currentOperation += selectedOperation; // Add operator if valid
             }
         }
